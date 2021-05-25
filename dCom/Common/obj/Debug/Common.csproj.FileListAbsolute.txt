@@ -3,3 +3,9 @@ C:\Users\Racunar1\Desktop\Ognjen\SCADA\dCom\Common\bin\Debug\Common.pdb
 C:\Users\Racunar1\Desktop\Ognjen\SCADA\dCom\Common\obj\Debug\Common.dll
 C:\Users\Racunar1\Desktop\Ognjen\SCADA\dCom\Common\obj\Debug\Common.pdb
 C:\Users\Racunar1\Desktop\Ognjen\SCADA\dCom\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Common\bin\Debug\Common.dll
+C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Common\bin\Debug\Common.pdb
+C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Common\obj\Debug\Common.dll
+C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Common\obj\Debug\Common.pdb
