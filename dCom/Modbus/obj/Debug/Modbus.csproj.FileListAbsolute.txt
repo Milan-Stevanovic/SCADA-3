@@ -1,9 +1,0 @@
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\bin\Debug\Modbus.dll
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\bin\Debug\Modbus.pdb
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\bin\Debug\Common.dll
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\bin\Debug\Common.pdb
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\obj\Debug\Modbus.csprojAssemblyReference.cache
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\obj\Debug\Modbus.csproj.CoreCompileInputs.cache
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\obj\Debug\Modbus.csproj.CopyComplete
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\obj\Debug\Modbus.dll
-C:\Users\milan\Desktop\SCADA ZADACI GIT\dCom\Modbus\obj\Debug\Modbus.pdb
