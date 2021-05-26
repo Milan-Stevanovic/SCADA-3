@@ -294,6 +294,46 @@ namespace dCom.Configuration
                 Int32.TryParse(configurationParameters[9], out temp);
                 AcquisitionInterval = temp;
             }
+			// Parsiranje za konvertovanje
+			if(configurationParameters[10].Equals("#"))
+            {
+				scalingFactor = 1;
+            }
+			else
+            {
+				Double.TryParse(configurationParameters[10], out doubleTemp);
+				scalingFactor = doubleTemp;
+            }
+
+			if (configurationParameters[11].Equals("#"))
+			{
+				deviation = 0;
+			}
+			else
+			{
+				Double.TryParse(configurationParameters[11], out doubleTemp);
+				deviation = doubleTemp;
+			}
+
+			if (configurationParameters[12].Equals("#"))
+			{
+				egu_min = 0;
+			}
+			else
+			{
+				Double.TryParse(configurationParameters[12], out doubleTemp);
+				egu_min = doubleTemp;
+			}
+
+			if (configurationParameters[13].Equals("#"))
+			{
+				egu_max = 1;
+			}
+			else
+			{
+				Double.TryParse(configurationParameters[13], out doubleTemp);
+				egu_max = doubleTemp;
+			}
         }
 
 		private PointType GetRegistryType(string registryTypeName)

@@ -59,12 +59,11 @@ namespace Modbus.ModbusFunctions
                     {
                         ushort value = (ushort)(tempByte & 1);
                         tempByte >>= 1;
+                        dictionary.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_INPUT, (ushort)(mrcp.StartAddress + brojac)), value);
                         brojac++;
+
                         if (mrcp.Quantity == brojac)
                             break;
-
-                        Console.WriteLine("\nTEST DIGITAL OUT ADRESA {0}, VREDNOST {1}\n", mrcp.StartAddress + brojac, value);
-                        dictionary.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_INPUT, (ushort)(mrcp.StartAddress + brojac)), value);
                     }
                 }
             }
