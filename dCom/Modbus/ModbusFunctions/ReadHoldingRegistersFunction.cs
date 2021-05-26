@@ -44,33 +44,40 @@ namespace Modbus.ModbusFunctions
         /// <inheritdoc />
         public override Dictionary<Tuple<PointType, ushort>, ushort> ParseResponse(byte[] response)
         {
-            ModbusReadCommandParameters mrcp = this.CommandParameters as ModbusReadCommandParameters;
             Dictionary<Tuple<PointType, ushort>, ushort> dictionary = new Dictionary<Tuple<PointType, ushort>, ushort>();
-
-            ushort q = response[8];
-            ushort value;
-
-            int start1 = 7;
-            int start2 = 8;
-
-            for (int i = 0; i < q / 2; i++)
+            if (response[7] == CommandParameters.FunctionCode + 0x80)
             {
-                byte p1 = response[start1 += 2];
-                byte p2 = response[start2 += 2];
-
-                value = (ushort)(p2 + (p1 << 8));
-
-                dictionary.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, (ushort)(mrcp.StartAddress + i)), value);
+                HandeException(response[8]);
             }
+            else
+            {
+                ModbusReadCommandParameters mrcp = this.CommandParameters as ModbusReadCommandParameters;
 
-            // KOD ISPOD VAZI KADA IMAMO SAMO JEDNU VREDNOST
-            /*
-            byte port1 = response[10];
-            byte port2 = response[9];
+                ushort q = response[8];
+                ushort value;
 
-            ushort value = (ushort)(port1 + (port2 << 8));
-            dictionary.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, mrcp.StartAddress), value);
-            */
+                int start1 = 7;
+                int start2 = 8;
+
+                for (int i = 0; i < q / 2; i++)
+                {
+                    byte p1 = response[start1 += 2];
+                    byte p2 = response[start2 += 2];
+
+                    value = (ushort)(p2 + (p1 << 8));
+
+                    dictionary.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, (ushort)(mrcp.StartAddress + i)), value);
+                }
+
+                // KOD ISPOD VAZI KADA IMAMO SAMO JEDNU VREDNOST
+                /*
+                byte port1 = response[10];
+                byte port2 = response[9];
+
+                ushort value = (ushort)(port1 + (port2 << 8));
+                dictionary.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, mrcp.StartAddress), value);
+                */
+            }
             return dictionary;
         }
     }

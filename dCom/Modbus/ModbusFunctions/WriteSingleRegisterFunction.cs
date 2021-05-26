@@ -42,17 +42,22 @@ namespace Modbus.ModbusFunctions
         public override Dictionary<Tuple<PointType, ushort>, ushort> ParseResponse(byte[] response)
         {
             Dictionary<Tuple<PointType, ushort>, ushort> dictionary = new Dictionary<Tuple<PointType, ushort>, ushort>();
+            if(response[7] == CommandParameters.FunctionCode + 0x80)
+            {
+                HandeException(response[8]);
+            }
+            else
+            {
+                ushort address1 = response[8];
+                ushort address2 = response[9];
+                ushort value1 = response[10];
+                ushort value2 = response[11];
 
-            ushort address1 = response[8];
-            ushort address2 = response[9];
-            ushort value1 = response[10];
-            ushort value2 = response[11];
+                ushort address = (ushort)(address2 + (address1 << 8));
+                ushort value = (ushort)(value2 + (value1 << 8));
 
-            ushort address = (ushort)(address2 + (address1 << 8));
-            ushort value = (ushort)(value2 + (value1 << 8));
-
-            dictionary.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, address), value);
-
+                dictionary.Add(new Tuple<PointType, ushort>(PointType.ANALOG_OUTPUT, address), value);
+            }
             return dictionary;
         }
     }

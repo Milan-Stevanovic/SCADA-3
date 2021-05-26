@@ -42,15 +42,32 @@ namespace Modbus.ModbusFunctions
         public override Dictionary<Tuple<PointType, ushort>, ushort> ParseResponse(byte[] response)
         {
             Dictionary<Tuple<PointType, ushort>, ushort> dictionary = new Dictionary<Tuple<PointType, ushort>, ushort>();
-            ModbusReadCommandParameters mrcp = this.CommandParameters as ModbusReadCommandParameters;
+            if (response[7] == CommandParameters.FunctionCode + 0x80)
+            {
+                HandeException(response[8]);
+            }
+            else
+            {
+                ModbusReadCommandParameters mrcp = this.CommandParameters as ModbusReadCommandParameters;
 
-            // U ovom zadatku se radi samo sa jednim bitom tj. potrebno je proveriti da li je poslednji bit 0 ili 1
-            // Zadatak se mora resiti pomocu bit maske ili shiftovanja
-            // Ako uzmemo citav bajt u kome se nalazi podatak i uradimo logicko '&' na njega dobicemo vrednost ili 0 ili 1
-            ushort value = (ushort)(response[9] & 1);
+                ushort kolicina = response[8];
+                int brojac = 0;
+                for (int i = 0; i < kolicina; i++)
+                {
+                    byte tempByte = response[9 + i];
+                    for (int j = 0; j < 8; j++)
+                    {
+                        ushort value = (ushort)(tempByte & 1);
+                        tempByte >>= 1;
+                        brojac++;
+                        if (mrcp.Quantity == brojac)
+                            break;
 
-            dictionary.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_INPUT, mrcp.StartAddress), value);
-
+                        Console.WriteLine("\nTEST DIGITAL OUT ADRESA {0}, VREDNOST {1}\n", mrcp.StartAddress + brojac, value);
+                        dictionary.Add(new Tuple<PointType, ushort>(PointType.DIGITAL_INPUT, (ushort)(mrcp.StartAddress + brojac)), value);
+                    }
+                }
+            }
             return dictionary;
         }
     }
