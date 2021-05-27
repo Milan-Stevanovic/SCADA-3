@@ -1,8 +1,7 @@
 STA 1
 TCP 502
 
+DBC 1
 
-DO_REG  10 40   0	0    1		  0  DO  @DigOut 1    # #   0     1  1 0 1
-DI_REG  8 1000  0	0    1		  0  DI  @DigIn  1    # #   0     1  1 0 1
-IN_REG  4 2000  0	0 4095		250  AI  @AnaIn  1   10 0 100 35000  # 100 30000
-HR_INT  2 3000  0	0 4095	    220  AO  @AnaOut 1   10 0 100 35000  # 100 30000
+HR_INT  1 1000 0 0 2000 1000 AO @AnaOut 1 1 0 0 2000 # 500 2000
+DO_REG  2 2000 0 0    1    0 DO @DigOut 1 # # 0    1 1   #    #

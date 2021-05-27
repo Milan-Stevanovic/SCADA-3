@@ -1,5 +1,6 @@
 ﻿using Common;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace ProcessingModule
@@ -29,6 +30,7 @@ namespace ProcessingModule
 			this.processingManager = processingManager;
             this.configuration = configuration;
             this.automationTrigger = automationTrigger;
+			this.delayBetweenCommands = configuration.DelayBetweenCommands;
         }
 
         /// <summary>
@@ -60,9 +62,39 @@ namespace ProcessingModule
 
 		private void AutomationWorker_DoWork()
 		{
-			//while (!disposedValue)
-			//{
-			//}
+			EGUConverter egu = new EGUConverter();
+			PointIdentifier nivoVode = new PointIdentifier(PointType.ANALOG_OUTPUT, 1000);
+			PointIdentifier pumpa1 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 2000);
+			PointIdentifier pumpa2 = new PointIdentifier(PointType.DIGITAL_OUTPUT, 2001);
+			List<PointIdentifier> list = new List<PointIdentifier> { nivoVode, pumpa1, pumpa2 };
+			while (!disposedValue)
+			{
+				List<IPoint> points = storage.GetPoints(list);
+				if(points[1].RawValue == 1)
+                {
+					int value = (int)egu.ConvertToEGU(points[0].ConfigItem.ScaleFactor,points[0].ConfigItem.Deviation, points[0].RawValue);
+					value -= 10;
+					if (value > points[0].ConfigItem.LowLimit)
+						processingManager.ExecuteWriteCommand(points[0].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, nivoVode.Address, value);
+					else
+						processingManager.ExecuteWriteCommand(points[1].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, pumpa1.Address, 0);
+				}
+
+				if (points[2].RawValue == 1)
+				{
+					int value = (int)egu.ConvertToEGU(points[0].ConfigItem.ScaleFactor, points[0].ConfigItem.Deviation, points[0].RawValue);
+					value -= 15;
+					if (value > points[0].ConfigItem.LowLimit)
+						processingManager.ExecuteWriteCommand(points[0].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, nivoVode.Address, value);
+					else
+						processingManager.ExecuteWriteCommand(points[2].ConfigItem, configuration.GetTransactionId(), configuration.UnitAddress, pumpa2.Address, 0);
+				}
+
+                for (int i = 0; i < delayBetweenCommands; i+=1000)
+                {
+					automationTrigger.WaitOne();
+                }
+			}
 		}
 
 		#region IDisposable Support
