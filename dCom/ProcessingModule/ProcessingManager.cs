@@ -131,7 +131,7 @@ namespace ProcessingModule
             point.RawValue = newValue;
             point.Timestamp = DateTime.Now;
             point.State = (DState)newValue;
-
+            point.Alarm = alarmProcessor.GetAlarmForDigitalPoint((ushort)point.State, point.ConfigItem);
         }
 
         /// <summary>
@@ -144,6 +144,7 @@ namespace ProcessingModule
             point.EguValue = eguConverter.ConvertToEGU(point.ConfigItem.ScaleFactor, point.ConfigItem.Deviation, newValue);
             point.RawValue = newValue;
             point.Timestamp = DateTime.Now;
+            point.Alarm = alarmProcessor.GetAlarmForAnalogPoint(point.EguValue, point.ConfigItem);
         }
 
         /// <inheritdoc />

@@ -334,7 +334,14 @@ namespace dCom.Configuration
 				Double.TryParse(configurationParameters[13], out doubleTemp);
 				egu_max = doubleTemp;
 			}
-        }
+
+			Double.TryParse(configurationParameters[14], out doubleTemp);
+			abnormalValue = (ushort)doubleTemp;
+			Double.TryParse(configurationParameters[15], out doubleTemp);
+			lowLimit = doubleTemp;
+			Double.TryParse(configurationParameters[16], out doubleTemp);
+			highLimit = doubleTemp;
+		}
 
 		private PointType GetRegistryType(string registryTypeName)
 		{
